@@ -4,7 +4,7 @@ description: EC_HAL API
 
 # Embedded Controller HAL
 
-Written by:   김영근
+Written by:   박정우
 
 Course:  임베디드컨트롤러
 
@@ -30,21 +30,48 @@ MCU:  				STM32F411RE, Nucleo-64
 
 
 ```c++
-#include "stm32f411xe.h"
+#include "stm32f4xx.h"
 
-#ifndef __EC_GPIO_H
-#define __EC_GPIO_H
+#ifndef __ECGPIO_H
+#define __ECGPIO_H
 
-#define INPUT  0x00
-#define OUTPUT 0x01
-#define AF     0x02
-#define ANALOG 0x03
+#ifdef __cplusplus
+ extern "C" {
+#endif /* __cplusplus */
 
-#define HIGH 1
-#define LOW  0
+// pin
+#define      PA5            5
+#define      PA6            6
+#define      PA7            7
+#define      PB6            6
 
-#define LED_PIN 	5
-#define BUTTON_PIN 13
+#define      BUTTON_PIN     13
+
+// Setting
+#define      HIGH           1 
+#define      LOW            0
+
+// MODE Setting
+#define      INPUT        	0
+#define      OUTPUT       	1 
+#define      ALTERNATE    	2
+#define      ANALOG       	3 
+
+// Output type Setting
+#define      PUSH_PULL 		0
+#define      OPEN_DRAIN		1
+
+// Output speed Setting
+#define      LOW_SPEED      0
+#define      MEDIUM_SPEED   1 
+#define      FAST_SPEED     2 
+#define      HIGH_SPEED     3 
+
+// Output PUPD Setting
+#define      PULL_UP       1 
+#define      PULL_DOWN      2 
+#define      RESERVED_2     3 
+
 
 
 void GPIO_init(GPIO_TypeDef *Port, int pin, int mode);
@@ -110,7 +137,7 @@ void GPIO_mode(GPIO_TypeDef *Port, int pin, int mode);
 **Example code**
 
 ```c++
-GPIO_mode(GPIOA, 5, OUTPUT);
+GPIO_mode(GPIOA, 5, OUTPUT); //set pin5 output mode
 ```
 
 
@@ -134,7 +161,7 @@ void GPIO_pupdr(GPIO_TypeDef* Port, int pin, int pupd);
 **Example code**
 
 ```c++
-GPIO_pupdr(GPIOA, 5, 0);  // 0: No PUPD
+GPIO_pupdr(GPIOA, 5, 0);  // 0: No PUPD pin5
 ```
 
 
@@ -158,7 +185,7 @@ void GPIO_ospeed(GPIO_TypeDef* Port, int pin, int speed);
 **Example code**
 
 ```c++
-GPIO_ospeed(GPIOA, 5, 3);  // 3: Fast speed
+GPIO_ospeed(GPIOA, 5, 3);  // 3: Fast speed pin5
 ```
 
 
@@ -229,7 +256,7 @@ void GPIO_write(GPIO_TypeDef* Port, int pin, int output);
 **Example code**
 
 ```c++
-GPIO_output(GPIOA, 5, 0);  // 0: LOW
+GPIO_output(GPIOA, 5, 0);  // 0: LOW 
 ```
 
 
