@@ -117,6 +117,102 @@ GPIO_mode(GPIOA, 5, OUTPUT);
 
 ### GPIO_pupdr\(\)
 
+Configure the I/O pull-up or pull-down: No PullupPulldown/ Pull-Up/Pull-Down/Analog/Reserved
+
+```c++
+void GPIO_pupdr(GPIO_TypeDef* Port, int pin, int pupd);
+```
+
+**Parameters**
+
+* **Port:**  Port Number,  GPIOA~GPIOH
+* **pin**:  pin number (int) 0~15
+* **pupd**:   No PullupPulldown (0),  Pull-Up(1), Pull-Down(2) , Reserved(3)
+
+
+
+**Example code**
+
+```c++
+GPIO_pupdr(GPIOA, 5, 0);  // 0: No PUPD
+```
+
+
+
+### GPIO_ospeed\(\)
+
+Configure the I/O output speed: Low speed/Medium speed/Fast speed/High speed
+
+```c++
+void GPIO_pupdr(GPIO_TypeDef* Port, int pin, int speed);
+```
+
+**Parameters**
+
+* **Port:**  Port Number,  GPIOA~GPIOH
+* **pin**:  pin number (int) 0~15
+* **pupd**:  Low speed(0), Medium speed(1), Fast speed(2), High speed(3)
+
+
+
+**Example code**
+
+```c++
+GPIO_pupdr(GPIOA, 5, 3);  // 3: Fast speed
+```
+
+
+
+### GPIO_otype\(\)
+
+Configure the output type of the I/O port:  Output push-pull/Output open-drain
+
+```c++
+void GPIO_pupdr(GPIO_TypeDef* Port, int pin, int type);
+```
+
+**Parameters**
+
+* **Port:**  Port Number,  GPIOA~GPIOH
+* **pin**:  pin number (int) 0~15
+* **pupd**:   Output push-pull(0)/Output open-drain(1)
+
+
+
+**Example code**
+
+```c++
+GPIO_pupdr(GPIOA, 5, 0);  // 0: No PUPD
+```
+
+
+
+### GPIO_READ\(\)
+
+Configures  GPIO pin modes: In/Out/AF/Analog
+
+```c++
+void GPIO_pupdr(GPIO_TypeDef* Port, int pin, int pupd);
+```
+
+**Parameters**
+
+* **Port:**  Port Number,  GPIOA~GPIOH
+* **pin**:  pin number (int) 0~15
+* **pupd**:   No PullupPulldown (0),  Pull-Up(1), Pull-Down(2) , ...
+
+
+
+**Example code**
+
+```c++
+GPIO_pupdr(GPIOA, 5, 0);  // 0: No PUPD
+```
+
+
+
+### GPIO_OSPEED\(\)
+
 Configures  GPIO pin modes: In/Out/AF/Analog
 
 ```c++
