@@ -10,7 +10,7 @@ Author:  JeongWoo Park
 
 Date:  Updated 2021-10-5
 
-embeddedembeddedembeddedembeddedembedded
+
 
 ---
 
@@ -40,11 +40,6 @@ This repository contains
 
 * _add more descriptions here_ 
 
-  
-
-_// Add your notes here_
-
-
 
 ## Environment
 
@@ -55,8 +50,6 @@ IDE/Compiler : Keil uVision 5
 OS: WIn10
 
 MCU:  STM32F411RE, Nucleo-64
-
-
 
 ## Installation
 
