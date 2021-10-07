@@ -205,7 +205,7 @@ int GPIO_read(GPIO_TypeDef* Port, int pin);
 **Example code**
 
 ```c++
-GPIO_read(GPIOA, 5);  // read signal of GPIOA pin5 
+GPIO_read(GPIOA, 13);  // read signal of GPIOA pin13
 ```
 
 
