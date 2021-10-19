@@ -406,7 +406,7 @@ void EXTI_enable(uint32_t pin);
 **Example code**
 
 ```c++
-EXTI_disable(13); //EXTI13 is enable
+EXTI_enable(13); //EXTI13 is enable
 ```
 
 
@@ -416,7 +416,7 @@ EXTI_disable(13); //EXTI13 is enable
 Disable the EXTI that fits the pin number.
 
 ```c++
-void EXTI_disnable(uint32_t pin);
+void EXTI_disable(uint32_t pin);
 ```
 
 **Parameters**
