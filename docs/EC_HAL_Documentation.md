@@ -484,7 +484,7 @@ void EXTIx_IRQHandler(void); x = 0,1,2 ....
 **Example code**
 
 ```c++
-void EXTIx_IRQHandler(void); 
+void EXTIx_IRQHandler(void); // called by interrupt
 ```
 
 
@@ -506,6 +506,153 @@ void LED_toggle(GPIO_TypeDef *Port, uint32_t pin)
 
 ```c++
 LED_toggle(GPIOC, 13); pin 13 LED does toggle 
+```
+
+
+
+## Interrupt SysTick
+
+### Header File
+
+ `#include "ecSystick.h"`
+
+
+```c++
+#include "stm32f4xx.h"
+
+#ifndef __ECSYSTICK_H
+#define __ECSYSTICK_H
+
+#define MCU_CLK_PLL 84000000
+#define MCU_CLK_HSI 16000000
+
+
+#ifdef __cplusplus
+ extern "C" {
+#endif /* __cplusplus */
+	 
+
+void SysRick_Initialize(uint32_t msec);
+void delay_ms(uint32_t msec);
+void SysTick_reset(void);
+uint32_t SysTick_val(void);
+void SysTick_enable(void);
+void SysTick_disable (void);
+void SysTick_Handler(void);
+ 
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
+#endif
+```
+
+
+
+### SysRick_Initialize()
+
+Initialize Systick Clock.
+
+```c++
+void SysRick_Initialize(uint32_t msec);
+```
+
+**Parameters**
+
+* **msec**: reload value + 1
+
+  Calculate Method: Reload = ( Systick inverval(Goal)/ Clock Period ) -1
+
+**Example code**
+
+```c++
+SysRick_Initialize(84000); // Systick clock is 1ms , assume PLL Clock 84MHz
+```
+
+
+
+### delay_ms()
+
+Delay by the input time.
+
+```c++
+void delay_ms(uint32_t msec);
+```
+
+**Parameters**
+
+* **msec**: Time of ms Unit
+
+**Example code**
+
+```c++
+delay_ms(1000); // Give 1s delay
+```
+
+
+
+### SysTick_val()
+
+Return the current Systick reload
+
+```c++
+uint32_t SysTick_val(void);
+```
+
+**Example code**
+
+```c++
+SysTick_val(void); // return current reload value
+```
+
+
+
+### SysTick_enable()
+
+Enable Systick 
+
+```c++
+void SysTick_enable(void);
+```
+
+**Example code**
+
+```c++
+SysTick_enable(); // enable Systick interrupt.
+```
+
+
+
+### SysTick_disable()
+
+Disable Systick 
+
+```c++
+void SysTick_disable(void);
+```
+
+**Example code**
+
+```c++
+SysTick_disable(); // disable Systick interrupt.
+```
+
+
+
+### SysTick_Handler()
+
+If Systick interrupt is ON,  Implement this function
+
+```c++
+void SysTick_Handler(void);
+```
+
+***caution**: use in main.c 
+
+**Example code**
+
+```c++
+SysTick_Handler(); // Called by interrupt
 ```
 
 
