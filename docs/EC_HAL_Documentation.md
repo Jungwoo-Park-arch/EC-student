@@ -324,6 +324,190 @@ void sevensegment_init(5); // Appear to number 5 on the 7-segment
 
 ------
 
+## Interrupt EXTI 
+
+### Header File
+
+ `#include "ecEXTI.h"`
+
+
+```c++
+#include "stm32f4xx.h"
+
+#ifndef __ECEXTI_H
+#define __ECEXTI_H
+
+#define FALL 0
+#define RISE 1
+#define BOTH 2
+
+#define PA_pin 0x0
+#define PB_pin 0x1
+#define PC_pin 0x2
+#define PD_pin 0x3
+#define PE_pin 0x4
+
+#ifdef __cplusplus
+ extern "C" {
+#endif /* __cplusplus */
+	 
+void EXTI_init (GPIO_TypeDef *Port, uint32_t pin, int edge , int prior);
+void EXTI_enable(uint32_t pin);
+void EXTI_disnable(uint32_t pin);
+uint32_t is_pending_EXTI(uint32_t pin);
+void clear_pending_EXTI(uint32_t pin);
+void EXTI15_10_IRQHandler(void);
+void LED_toggle(GPIO_TypeDef *Port, uint32_t pin);
+	 
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
+#endif
+```
+
+
+
+### EXTI_init\(\)
+
+Initializes EXTI pins with default setting. 
+
+```c++
+void EXTI_init (GPIO_TypeDef *Port, uint32_t pin, int edge , int prior);
+```
+
+**Parameters**
+
+* **Port:**  Port Number,  GPIOA~GPIOH
+* **pin**:  pin number (int) 0~15
+* **edge**: FALL(0), RISE (1), BOTH(2)
+* **prior**: prior number. The smaller the number, the more priority
+
+**Example code**
+
+```c++
+EXTI_init(GPIOC, 13, FALL, 0); //When falling edge, Pin 13 of GPIOC port does interrupt   
+```
+
+
+
+### EXTI_enable\(\)
+
+Enable the EXTI that fits the pin number.
+
+```c++
+void EXTI_enable(uint32_t pin);
+```
+
+**Parameters**
+
+* **Pin:**  pin number (int) 0~15
+
+**Example code**
+
+```c++
+EXTI_enable(13); //EXTI13 is enable
+```
+
+
+
+### EXTI_disable\(\)
+
+Disable the EXTI that fits the pin number.
+
+```c++
+void EXTI_disnable(uint32_t pin);
+```
+
+**Parameters**
+
+* **Pin:**  pin number (int) 0~15
+
+**Example code**
+
+```c++
+EXTI_enable(13); //EXTI13 is disable
+```
+
+
+
+### is_pending_EXTI\(\)
+
+Check the pending is ON
+
+```c++
+uint32_t is_pending_EXTI(uint32_t pin);
+```
+
+**Parameters**
+
+* **Pin:**  pin number (int) 0~15
+
+**Example code**
+
+```c++
+is_pending_EXTI(13); // If Pending of pin 13 is ON, retrun 1. 
+```
+
+
+
+### clear_pending_EXTI\(\)
+
+Clear the pending's value
+
+```c++
+void clear_pending_EXTI(uint32_t pin);
+```
+
+**Parameters**
+
+* **Pin:**  pin number (int) 0~15
+
+**Example code**
+
+```c++
+clear_pending_EXTI(13); //clear pending of pin 13
+```
+
+
+
+### EXTIx_IRQHandler()
+
+If EXTIx interrupt is ON,  Implement this function
+
+```c++
+void EXTIx_IRQHandler(void); x = 0,1,2 ....
+```
+
+***caution**: The function name varies depending on the pin number. and use in main.c (Refence: Spec Sheet)
+
+**Example code**
+
+```c++
+void EXTIx_IRQHandler(void); 
+```
+
+
+
+### LED_toggle()
+
+A function that toggles the LED.
+
+```c++
+void LED_toggle(GPIO_TypeDef *Port, uint32_t pin) 
+```
+
+**Parameters**
+
+* **Port**: Port Number,  GPIOA~GPIOH
+* **Pin:**  pin number (int) 0~15
+
+**Example code**
+
+```c++
+LED_toggle(GPIOC, 13); pin 13 LED does toggle 
+```
+
 
 
 ## Class or Header name
