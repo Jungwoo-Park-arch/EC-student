@@ -426,7 +426,7 @@ void EXTI_disnable(uint32_t pin);
 **Example code**
 
 ```c++
-EXTI_enable(13); //EXTI13 is disable
+EXTI_disable(13); //EXTI13 is disable
 ```
 
 
