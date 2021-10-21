@@ -657,6 +657,141 @@ SysTick_Handler(); // Called by interrupt
 
 
 
+### SysTick_reset()
+
+reset the systick val
+
+```c++
+void SysTick_reset(void);
+```
+
+**Example code**
+
+```c++
+SysTick_reset(); //reset the val value
+```
+
+
+
+## EC_API
+
+### Header File
+
+ `#include "EC_GPIO_API_student.h"`
+
+
+```c++
+#include "stm32f411xe.h"
+#include "ecRCC.h"
+#include "ecGPIO.h"
+#include "ecEXTI.h"
+#include "ecSystick.h"
+
+#ifndef __EC_GPIO_API_H
+#define __EC_GPIO_API_H
+
+#ifdef __cplusplus
+ extern "C" {
+#endif /* __cplusplus */
+	
+class EC_Ticker
+{
+public:
+		EC_Ticker(int reload);
+		
+	   void delay_ms (uint32_t  delay_t);
+		
+		void reset(void);
+		
+		uint32_t read_ms (void);
+	
+
+private:
+		
+};
+ 
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
+#endif
+```
+
+
+
+### EC_Ticker::EC_Ticker()
+
+using the class function, It is easy for users to understand.
+
+```c++
+EC_Ticker::EC_Ticker(int reload);
+```
+
+**Parameters**
+
+* **reload**: Systick period(Unit: ms) 
+
+**Example code**
+
+```c++
+EC_Ticker tick(1); // "Tick" is a name that the user selectively determines.
+				   // The function defined in 'class' is used as 'tick.xx'.
+```
+
+
+
+### EC_Ticker::delay_ms()
+
+Delay by the input time.
+
+```c++
+void EC_Ticker::delay_ms(uint32_t delay)
+```
+
+**Parameters**
+
+* **delay**:  Time of ms Unit(msec)
+
+**Example code**
+
+```c++
+tick.delay_ms(1000) // delay 1000ms
+```
+
+
+
+### EC_Ticker::reset()
+
+Reset the systick val
+
+```c++
+void EC_Ticker::reset(void)
+```
+
+**Example code**
+
+```c++
+tick.reset(); // Reset the val value
+```
+
+
+
+### EC_Ticker::read_ms()
+
+Read the current time (Unit: ms)
+
+```c++
+uint32_t EC_Ticker::read_ms(void)
+```
+
+**Example code**
+
+```c++
+tick.read_ms(); // Read the current time
+```
+
+
+
 ## Class or Header name
 
 ### Function Name
