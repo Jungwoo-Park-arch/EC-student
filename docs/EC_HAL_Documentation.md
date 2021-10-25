@@ -792,6 +792,56 @@ tick.read_ms(); // Read the current time
 
 
 
+## Timer
+
+### Header File
+
+ `#include "ecTIM.h"`
+
+
+```c++
+#include "stm32f4xx.h"
+#include "ecSystick.h"
+
+#ifndef __ECTIM_H
+#define __ECTIM_H
+
+#define UP_COUNT 0
+#define DOWN_COUNT 1
+
+#ifdef __cplusplus
+ extern "C" {
+#endif /* __cplusplus */
+	 
+typedef struct {
+	GPIO_TypeDef *port;
+	int pin;
+	TIM_TypeDef *timer;
+	TIM_TypeDef *timx;
+	int ch;
+}TIM_t;	 
+	 
+void TIM_init(TIM_TypeDef *timerx, uint32_t msec);
+void TIM_period_us(TIM_TypeDef* timx, uint32_t usec);
+void TIM_period_ms(TIM_TypeDef* timx, uint32_t msec);
+void TIM_INT_init(TIM_TypeDef* timerx, uint32_t msec);
+void TIM_INT_enable(TIM_TypeDef* timx);
+void TIM_INT_disable(TIM_TypeDef* timx);
+uint32_t is_UIF(TIM_TypeDef *TIMx);
+void clear_UIF(TIM_TypeDef *TIMx);
+
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
+#endif
+```
+
+
+
+
+
 ## Class or Header name
 
 ### Function Name
