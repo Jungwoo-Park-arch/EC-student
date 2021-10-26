@@ -1179,7 +1179,6 @@ void PWM_pinmap(PWM_t *PWM_pin);
 **Parameters**
 
 * **PWM_t *PWM_pin**:  PWM struct
-* ![image-20211026213330736](C:\Users\jake0\AppData\Roaming\Typora\typora-user-images\image-20211026213330736.png)![image-20211026213349448](C:\Users\jake0\AppData\Roaming\Typora\typora-user-images\image-20211026213349448.png)
 
 **Example code**
 
