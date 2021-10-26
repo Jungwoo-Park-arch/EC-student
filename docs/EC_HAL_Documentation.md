@@ -863,7 +863,7 @@ TIM_init(TIM2, 1) //1ms Timer ON.
 
 ### TIM_period_us()
 
-
+Select TImer period: Unit(us)
 
 ```c++
 void TIM_period_us(TIM_TypeDef* timx, uint32_t usec);
@@ -884,7 +884,7 @@ TIM_period_us(TIM2, 10); //Setting timer 2  (10usec)
 
 ### TIM_period_ms()
 
-Delay by the input time.
+Select TImer period: Unit(ms)
 
 ```c++
 void TIM_period_ms(TIM_TypeDef* timx, uint32_t msec);
@@ -966,7 +966,7 @@ TIM_INT_disable(TIM2) // Timer 2 interrput OFF
 
 ### is_UIF()
 
-Delay by the input time.
+Check UIFlag : ON , OFF
 
 ```c++
 uint32_t is_UIF(TIM_TypeDef *TIMx);
@@ -974,19 +974,19 @@ uint32_t is_UIF(TIM_TypeDef *TIMx);
 
 **Parameters**
 
-* **delay**:  Time of ms Unit(msec)
+* **TIM_TypeDef *timerx**:  TIM1~TIM11
 
 **Example code**
 
 ```c++
-tick.delay_ms(1000) // delay 1000ms
+is_UIF(TIM2); //Drive (TIMx->SR & TIM_SR_UIF)!= 0 // delay 1000ms
 ```
 
 
 
 ### clear_UIF()
 
-Delay by the input time.
+Clear UIFlage
 
 ```c++
 void clear_UIF(TIM_TypeDef *TIMx);
@@ -994,13 +994,200 @@ void clear_UIF(TIM_TypeDef *TIMx);
 
 **Parameters**
 
-* **delay**:  Time of ms Unit(msec)
+* **TIM_TypeDef *timerx**:  TIM1~TIM11
 
 **Example code**
 
 ```c++
-tick.delay_ms(1000) // delay 1000ms
+clear_UIF(TIM2) // clear Timer 2 UI Flag 
 ```
+
+
+
+## PWM
+
+### Header File
+
+ `#include "ecPWM.h"`
+
+
+```c++
+/**
+******************************************************************************
+* @author  SSSLAB
+* @Mod		 2021-8-12 by YKKIM  	
+* @brief   Embedded Controller:  EC_HAL_for_student_exercise 
+* 
+******************************************************************************
+*/
+
+#include "stm32f411xe.h"
+#include "ecGPIO.h"
+#include "ecTIM.h"  			// change to ecTIM.h
+
+#ifndef __EC_PWM_H
+#define __EC_PWM_H
+
+#ifdef __cplusplus
+ extern "C" {
+#endif /* __cplusplus */
+
+define LED_PIN 5
+
+typedef struct{
+   GPIO_TypeDef *port;
+   int pin;
+   TIM_TypeDef *timer;
+   int ch;
+} PWM_t;
+
+
+/* PWM Configuration */
+void PWM_init(PWM_t *pwm, GPIO_TypeDef *port, int pin);  
+void PWM_period_ms(PWM_t *pwm,  uint32_t msec);		
+void PWM_period_us(PWM_t *PWM_pin, uint32_t usec);  
+
+void PWM_pulsewidth_ms(PWM_t *pwm, float pulse_width_ms);
+void PWM_duty(PWM_t *pwm, float duty);
+void PWM_pinmap(PWM_t *PWM_pin);
+
+
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
+#endif
+```
+
+
+
+### PWM_init()
+
+Select OUTPUT(PWM) Port, Pin 
+
+```c++
+void PWM_init(PWM_t *pwm, GPIO_TypeDef *port, int pin);  
+```
+
+**Parameters**
+
+* **PWM_t *pwm**:  determined by port and pin number. //@PWM
+* **GPIO_TypeDef *port**: GPIOA~GPIOH
+* **pin**: 0~15
+
+**Example code**
+
+```c++
+PWM_init(&PWM,GPIOA,1);  // Init PA1, according to Port and pin number, determined PWM CH
+```
+
+
+
+### PWM_period_ms()
+
+Select PWM period: Unit(ms)
+
+```c++
+void PWM_period_ms(PWM_t *pwm,  uint32_t msec);	
+```
+
+**Parameters**
+
+* **PWM_t *pwm**:  determined by port and pin number. //@PWM
+* **msec**: PWM period (ms)
+
+**Example code**
+
+```c++
+PWM_period_ms(&PWM,20); // PWM Period 20ms   
+```
+
+
+
+### PWM_period_us()
+
+Select PWM period: Unit(us)
+
+```c++
+void PWM_period_us(PWM_t *PWM_pin, uint32_t usec);  
+```
+
+**Parameters**
+
+* **PWM_t *pwm**:  determined by port and pin number. //@PWM
+* **usec**: PWM period (us)
+
+**Example code**
+
+```c++
+PWM_period_us(&PWM,20); // PWM Period 20us   
+```
+
+
+
+### PWM_pulsewidth_ms()
+
+Make the pulsewidth Unit(ms)
+
+```c++
+void PWM_pulsewidth_ms(PWM_t *pwm, float pulse_width_ms);
+```
+
+**Parameters**
+
+* **PWM_t *pwm**:  determined by port and pin number. //@PWM
+* **pulse_width_ms**: pulse width Unit(ms)  // "Pulse width" within the declared period of "PWM".
+
+**Example code**
+
+```c++
+PWM_pulsewidth_ms(&pwm, 0.5) //if PWM period 20ms, pulse width is 0.5ms
+```
+
+
+
+### PWM_duty()
+
+Select the duty ratio
+
+```c++
+void PWM_duty(PWM_t *pwm, float duty);
+```
+
+**Parameters**
+
+* **PWM_t *pwm**:  determined by port and pin number. //@PWM
+* **duty**: "duty ratio" that I want to use. 
+
+**Example code**
+
+```c++
+PWM_duty(0.5/20) //  pulsewidth 0.5ms / total 20ms = duty // 2.5% 
+```
+
+
+
+### PWM_pinmap()
+
+Select PWM channel
+
+```c++
+void PWM_pinmap(PWM_t *PWM_pin);
+```
+
+**Parameters**
+
+* **PWM_t *PWM_pin**:  PWM struct
+* ![image-20211026213330736](C:\Users\jake0\AppData\Roaming\Typora\typora-user-images\image-20211026213330736.png)![image-20211026213349448](C:\Users\jake0\AppData\Roaming\Typora\typora-user-images\image-20211026213349448.png)
+
+**Example code**
+
+```c++
+PWM_pinmap(pwm) //matching each channel
+```
+
+
 
 
 
