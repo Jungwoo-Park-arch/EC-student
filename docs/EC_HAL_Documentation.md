@@ -1190,8 +1190,7 @@ PWM_pinmap(pwm) //matching each channel
 
 
 
-
-## Class or Header name
+Class or Header name
 
 ### Function Name
 
