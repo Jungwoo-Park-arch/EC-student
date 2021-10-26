@@ -1186,6 +1186,7 @@ void PWM_pinmap(PWM_t *PWM_pin);
 PWM_pinmap(pwm) //matching each channel
 ```
 
+![image](https://user-images.githubusercontent.com/84221531/138924327-a954a858-dbab-4b97-ab68-6dff2936022b.png)
 
 
 
