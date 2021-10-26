@@ -840,6 +840,168 @@ void clear_UIF(TIM_TypeDef *TIMx);
 
 
 
+### TIM_init()
+
+Turn on Timer counter : default upcounter
+
+```c++
+void TIM_init(TIM_TypeDef *timerx, uint32_t msec);
+```
+
+**Parameters**
+
+* **TIM_TypeDef *timerx**:  TIM1~TIM11
+* **msec**: Count period // Unit msec 
+
+**Example code**
+
+```c++
+TIM_init(TIM2, 1) //1ms Timer ON.
+```
+
+
+
+### TIM_period_us()
+
+
+
+```c++
+void TIM_period_us(TIM_TypeDef* timx, uint32_t usec);
+```
+
+**Parameters**
+
+* **TIM_TypeDef *timerx**:  TIM1~TIM11
+* **usec**: Timer period.
+
+**Example code**
+
+```c++
+TIM_period_us(TIM2, 10); //Setting timer 2  (10usec)  
+```
+
+
+
+### TIM_period_ms()
+
+Delay by the input time.
+
+```c++
+void TIM_period_ms(TIM_TypeDef* timx, uint32_t msec);
+```
+
+**Parameters**
+
+* **TIM_TypeDef *timerx**:  TIM1~TIM11
+* **msec**: Timer period.
+
+**Example code**
+
+```c++
+TIM_period_ms(TIM2, 10); //Setting timer 2  (10msec) 
+```
+
+
+
+### TIM_INT_init()
+
+Interrupt by using Timer 
+
+```c++
+void TIM_INT_init(TIM_TypeDef* timerx, uint32_t msec);
+```
+
+**Parameters**
+
+* **TIM_TypeDef *timerx**:  TIM1~TIM11
+* **msec**: Timer period. Specify IRQ according to the timer.
+
+**Example code**
+
+```c++
+TIM_INT_init(TIM2,10) // Setting interrupt every 10ms
+```
+
+
+
+### TIM_INT_enable()
+
+TImer interrupt ON
+
+```c++
+void TIM_INT_enable(TIM_TypeDef* timx);
+```
+
+**Parameters**
+
+* **TIM_TypeDef *timerx**:  TIM1~TIM11
+
+**Example code**
+
+```c++
+TIM_INT_enable(TIM2) // Timer 2 interrput ON
+```
+
+
+
+### TIM_INT_disable()
+
+TImer interrupt OFF
+
+```c++
+void TIM_INT_disable(TIM_TypeDef* timx);
+```
+
+**Parameters**
+
+* **TIM_TypeDef *timerx**:  TIM1~TIM11
+
+**Example code**
+
+```c++
+TIM_INT_disable(TIM2) // Timer 2 interrput OFF
+```
+
+
+
+### is_UIF()
+
+Delay by the input time.
+
+```c++
+uint32_t is_UIF(TIM_TypeDef *TIMx);
+```
+
+**Parameters**
+
+* **delay**:  Time of ms Unit(msec)
+
+**Example code**
+
+```c++
+tick.delay_ms(1000) // delay 1000ms
+```
+
+
+
+### clear_UIF()
+
+Delay by the input time.
+
+```c++
+void clear_UIF(TIM_TypeDef *TIMx);
+```
+
+**Parameters**
+
+* **delay**:  Time of ms Unit(msec)
+
+**Example code**
+
+```c++
+tick.delay_ms(1000) // delay 1000ms
+```
+
 
 
 ## Class or Header name
