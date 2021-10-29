@@ -1187,6 +1187,7 @@ PWM_pinmap(pwm) //matching each channel
 ```
 
 ![image](https://user-images.githubusercontent.com/84221531/138924327-a954a858-dbab-4b97-ab68-6dff2936022b.png)
+![image](https://user-images.githubusercontent.com/84221531/139366952-485bcf4c-0e08-4a26-866c-15a5490c2fb6.png)
 
 
 
