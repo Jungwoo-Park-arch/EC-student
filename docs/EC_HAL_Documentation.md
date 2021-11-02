@@ -1190,6 +1190,185 @@ PWM_pinmap(pwm) //matching each channel
 
 ![image](https://user-images.githubusercontent.com/84221531/139368612-297ebd6d-6cf9-4eb6-9282-9df1f9ef59c4.png)
 
+## Stepper Motor
+
+### Header File
+
+ `#include "ecStepper.h"`
+
+
+```c++
+
+#include "stm32f411xe.h"
+#include "ecGPIO.h"
+#include "ecSystick.h"
+			
+#ifndef __EC_STEPPER_H
+#define __EC_STEPPER_H
+
+#ifdef __cplusplus
+ extern "C" {
+#endif /* __cplusplus */
+
+//State mode
+#define HALF 0
+#define FULL 1	 
+	 
+/* Stepper Motor */
+//stepper motor function
+
+typedef struct{
+   GPIO_TypeDef *port1;
+   int pin1;
+	 GPIO_TypeDef *port2;
+   int pin2;
+	 GPIO_TypeDef *port3;
+   int pin3;
+	 GPIO_TypeDef *port4;
+   int pin4;
+	 int _step_num;
+} Stepper_t;
+
+	 
+void Stepper_init(GPIO_TypeDef* port1, int pin1, GPIO_TypeDef* port2, int pin2, GPIO_TypeDef* port3, int pin3, GPIO_TypeDef* port4, int pin4);
+     
+void Stepper_setSpeed (long whatSpeed, int mode);
+void Stepper_step(int steps, int direction, int mode); 
+void Stepper_run (int direction, int mode); 
+void Stepper_stop (void);
+void Stepper_pinOut (uint32_t state, int mode);
+     
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
+#endif
+
+```
+
+
+
+### Stepper_init()
+
+Select stepper motor output pin and initialization
+
+```c++
+void Stepper_init(GPIO_TypeDef* port1, int pin1, GPIO_TypeDef* port2, int pin2, GPIO_TypeDef* port3, int pin3, GPIO_TypeDef* port4, int pin4);
+```
+
+**Parameters**
+
+* **GPIO_TypeDef* port1~4**:  Select GPIO port GPIOA~GPIOH
+* **pin1~4**: Select the pin number 0~15 
+
+**Example code**
+
+```c++
+Stepper_init(GPIOB,10,GPIOB,4,GPIOB,5,GPIOB,3); // PB10, PB4, PB5, PB3 initialization 
+```
+
+
+
+### Stepper_setSpeed()
+
+Select Rotation speed of the motor
+
+```c++
+void Stepper_setSpeed (long whatSpeed, int mode);
+```
+
+**Parameters**
+
+* **whatSpeed**: Motor Speed (Unit: RPM)  
+* **mode**: FULL(0) , HALF(1) 
+
+**Example code**
+
+```c++
+Stepper_setSpeed (3,FULL); //3RPM, FULL mode
+```
+
+
+
+### Stepper_step()
+
+The number of next step, 5steps => S0-> S1-> S2-> S3-> S0
+
+```c++
+void Stepper_step(int steps, int direction, int mode); 
+```
+
+**Parameters**
+
+* **steps**: total steps numbers
+* **direction**: Right cycle(0), Left cycle(1)
+* **mode**: FULL(0) , HALF(1) 
+
+**Example code**
+
+```c++
+Stepper_step(1000, Right, FULL); // FULL MODE, Right cycle, 1000steps 
+```
+
+
+
+### Stepper_run ()
+
+NOT use in this LAB
+
+```c++
+void Stepper_run (int direction, int mode); 
+```
+
+**Parameters**
+
+* 
+
+**Example code**
+
+```c++
+
+```
+
+
+
+### Stepper_stop()
+
+Stop the motor.
+
+```c++
+void Stepper_stop(void);
+```
+
+**Example code**
+
+```c++
+Stepper_stop(); // stop the motor
+```
+
+
+
+### Stepper_pinOut()
+
+It receives voltage depending on the condition.
+
+```c++
+void Stepper_pinOut(uint32_t state, int mode);
+```
+
+**Parameters**
+
+* **state**: S0, S1, S2 ...
+* **mode**:  FULL(0) , HALF(1) 
+
+**Example code**
+
+```c++
+Stepper_pinOut(1, FULL)// FULL MODE, Output the state S1 
+```
+
+
+
 
 
 Class or Header name
