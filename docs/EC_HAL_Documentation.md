@@ -1369,6 +1369,284 @@ Stepper_pinOut(1, FULL)// FULL MODE, Output the state S1
 
 
 
+## ADC(Analog to Digital Converter)
+
+### Header File
+
+ `#include "ecADC.h"`
+
+
+```c++
+#ifndef __MY_ADC_H
+#define __MY_ADC_H
+#include "stm32f411xe.h"
+
+// ADC trigmode
+#define SW 0
+#define TRGO 1
+
+// ADC contmode
+#define CONT 0
+#define SINGLE 1
+
+// Edge Type
+#define RISE 1
+#define FALL 2
+#define BOTH 3
+
+#define _DEFAULT 0
+
+// ADC setting
+void ADC_init(GPIO_TypeDef *port, int pin, int trigmode);			// trigmode : SW , TRGO
+void ADC_continue(int contmode); 													// contmode : CONT, SINGLE / Operate both ADC,JADC
+void ADC_TRGO(TIM_TypeDef* TIMx, uint32_t msec, int edge);
+void ADC_sequence(int length, int *seq); 
+void TIM_TRGO_init(TIM_TypeDef* timx, uint32_t msec);
+
+void ADC_start(void);
+
+uint32_t is_ADC_EOC(void);
+uint32_t is_ADC_OVR(void);
+void clear_ADC_OVR(void);
+
+uint32_t ADC_read(void);
+uint32_t ADC_pinmap(GPIO_TypeDef *port, int pin);
+#endif
+
+```
+
+
+
+### ADC_init()	
+
+Initialize GPIO port and pin, and select trig mode 
+
+```c++
+void ADC_init(GPIO_TypeDef *port, int pin, int trigmode);	
+```
+
+**Parameters**
+
+* **GPIO_TypeDef *port**: GPIOA~GPIOH
+* **pin**: 0~15
+* **trigmode**: SW(0) // internal , TRGO(1) //external   
+
+**Example code**
+
+```c++
+ADC_init(GPIOB,1,TRGO); // PB1 set by ADC mode and it will start by TRGO trig
+```
+
+
+
+### ADC_TRGO()
+
+Setting TRGO mode 
+
+```c++
+void ADC_TRGO(TIM_TypeDef* TIMx, uint32_t msec, int edge);
+```
+
+**Parameters**
+
+* **TIM_TypeDef* TIMx**: TIMER number: ex) TIM2, TIM3
+* **msec**:  timer period
+* **edge**: RISE(0), FALL(1), BOTH(2) //edge detech
+
+**Example code**
+
+```c++
+ADC_TRGO(TIM2,1,RISE);	// HW trig mode settting, TIM2(1msec) 
+```
+
+
+
+### ADC_continue()
+
+Choose repetition: Continuous, Single
+
+```c++
+void ADC_continue(int contmode); 	
+```
+
+**Parameters**
+
+* **contmode**: CONT(0), SINGLE(1)  
+
+**Example code**
+
+```c++
+ADC_continue(SINGLE); // 추가로 설명해야함 
+```
+
+
+
+### ADC_sequence()
+
+It receives voltage depending on the condition.
+
+```c++
+void ADC_sequence(int length, int *seq); 
+```
+
+**Parameters**
+
+* **state**: S0, S1, S2 ...
+* **mode**:  FULL(0) , HALF(1) 
+
+**Example code**
+
+```c++
+Stepper_pinOut(1, FULL)// FULL MODE, Output the state S1 
+```
+
+
+
+### TIM_TRGO_init()
+
+It receives voltage depending on the condition.
+
+```c++
+void TIM_TRGO_init(TIM_TypeDef* timx, uint32_t msec);
+```
+
+**Parameters**
+
+* **state**: S0, S1, S2 ...
+* **mode**:  FULL(0) , HALF(1) 
+
+**Example code**
+
+```c++
+Stepper_pinOut(1, FULL)// FULL MODE, Output the state S1 
+```
+
+
+
+### ADC_start()
+
+It receives voltage depending on the condition.
+
+```c++
+void ADC_start(void);
+```
+
+**Parameters**
+
+* **state**: S0, S1, S2 ...
+* **mode**:  FULL(0) , HALF(1) 
+
+**Example code**
+
+```c++
+Stepper_pinOut(1, FULL)// FULL MODE, Output the state S1 
+```
+
+
+
+### is_ADC_EOC()
+
+It receives voltage depending on the condition.
+
+```c++
+uint32_t is_ADC_EOC(void);
+```
+
+**Parameters**
+
+* **state**: S0, S1, S2 ...
+* **mode**:  FULL(0) , HALF(1) 
+
+**Example code**
+
+```c++
+Stepper_pinOut(1, FULL)// FULL MODE, Output the state S1 
+```
+
+
+
+### is_ADC_OVR()
+
+It receives voltage depending on the condition.
+
+```c++
+uint32_t is_ADC_OVR(void);
+```
+
+**Parameters**
+
+* **state**: S0, S1, S2 ...
+* **mode**:  FULL(0) , HALF(1) 
+
+**Example code**
+
+```c++
+Stepper_pinOut(1, FULL)// FULL MODE, Output the state S1 
+```
+
+
+
+### clear_ADC_OVR()
+
+It receives voltage depending on the condition.
+
+```c++
+void clear_ADC_OVR(void);
+```
+
+**Parameters**
+
+* **state**: S0, S1, S2 ...
+* **mode**:  FULL(0) , HALF(1) 
+
+**Example code**
+
+```c++
+Stepper_pinOut(1, FULL)// FULL MODE, Output the state S1 
+```
+
+
+
+### ADC_read()
+
+It receives voltage depending on the condition.
+
+```c++
+uint32_t ADC_read(void);
+```
+
+**Parameters**
+
+* **state**: S0, S1, S2 ...
+* **mode**:  FULL(0) , HALF(1) 
+
+**Example code**
+
+```c++
+Stepper_pinOut(1, FULL)// FULL MODE, Output the state S1 
+```
+
+
+
+### ADC_pinmap()
+
+It receives voltage depending on the condition.
+
+```c++
+uint32_t ADC_pinmap(GPIO_TypeDef *port, int pin);
+```
+
+**Parameters**
+
+* **state**: S0, S1, S2 ...
+* **mode**:  FULL(0) , HALF(1) 
+
+**Example code**
+
+```c++
+Stepper_pinOut(1, FULL)// FULL MODE, Output the state S1 
+```
+
 
 
 Class or Header name
