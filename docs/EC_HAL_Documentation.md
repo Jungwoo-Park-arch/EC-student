@@ -1476,14 +1476,14 @@ void ADC_continue(int contmode);
 **Example code**
 
 ```c++
-ADC_continue(SINGLE); // 추가로 설명해야함 
+ADC_continue(SINGLE); //Single conversion mode ON, it is used TRGO
 ```
 
 
 
 ### ADC_sequence()
 
-It receives voltage depending on the condition.
+Set the Channel sequence
 
 ```c++
 void ADC_sequence(int length, int *seq); 
@@ -1491,20 +1491,20 @@ void ADC_sequence(int length, int *seq);
 
 **Parameters**
 
-* **state**: S0, S1, S2 ...
-* **mode**:  FULL(0) , HALF(1) 
+* **length**: The number of channels ex) if use ch1, ch2 ..... length = 2
+* ***seq**:  what i have to do first ex) seq[2] = {8 , 9} <-- channel 8 is fisrt 
 
 **Example code**
 
 ```c++
-Stepper_pinOut(1, FULL)// FULL MODE, Output the state S1 
+ADC_sequence(2,seq); //Total channel's number is 2. The priority is to have a low index number.
 ```
 
 
 
 ### TIM_TRGO_init()
 
-It receives voltage depending on the condition.
+Set the TRGO timer 
 
 ```c++
 void TIM_TRGO_init(TIM_TypeDef* timx, uint32_t msec);
@@ -1512,125 +1512,100 @@ void TIM_TRGO_init(TIM_TypeDef* timx, uint32_t msec);
 
 **Parameters**
 
-* **state**: S0, S1, S2 ...
-* **mode**:  FULL(0) , HALF(1) 
+* **TIM_TypeDef* timx**: Timer number ex) TIM2, TIM3
+* **msec**: timer clock
 
 **Example code**
 
 ```c++
-Stepper_pinOut(1, FULL)// FULL MODE, Output the state S1 
+TIM_TRGO_init(TIM2,1) // TRGO timer clock ON. TIM2 1msec
 ```
 
 
 
 ### ADC_start()
 
-It receives voltage depending on the condition.
+ADC is started 
 
 ```c++
 void ADC_start(void);
 ```
 
-**Parameters**
-
-* **state**: S0, S1, S2 ...
-* **mode**:  FULL(0) , HALF(1) 
-
 **Example code**
 
 ```c++
-Stepper_pinOut(1, FULL)// FULL MODE, Output the state S1 
+ADC_start(); //ADC start 
 ```
 
 
 
 ### is_ADC_EOC()
 
-It receives voltage depending on the condition.
+If conversion has been finished, this bit is setted as 1. Then, it is cleared by software. 
 
 ```c++
 uint32_t is_ADC_EOC(void);
 ```
 
-**Parameters**
-
-* **state**: S0, S1, S2 ...
-* **mode**:  FULL(0) , HALF(1) 
-
 **Example code**
 
 ```c++
-Stepper_pinOut(1, FULL)// FULL MODE, Output the state S1 
+is_ADC_EOC(); //Check if Conversion is finished
 ```
 
 
 
 ### is_ADC_OVR()
 
-It receives voltage depending on the condition.
+this bit is set by hardware when data are lost.
 
 ```c++
 uint32_t is_ADC_OVR(void);
 ```
 
-**Parameters**
-
-* **state**: S0, S1, S2 ...
-* **mode**:  FULL(0) , HALF(1) 
-
 **Example code**
 
 ```c++
-Stepper_pinOut(1, FULL)// FULL MODE, Output the state S1 
+is_ADC_OVR(); // check the overrap.
 ```
 
 
 
 ### clear_ADC_OVR()
 
-It receives voltage depending on the condition.
+Clear overrap bit
 
 ```c++
 void clear_ADC_OVR(void);
 ```
 
-**Parameters**
-
-* **state**: S0, S1, S2 ...
-* **mode**:  FULL(0) , HALF(1) 
-
 **Example code**
 
 ```c++
-Stepper_pinOut(1, FULL)// FULL MODE, Output the state S1 
+clear_ADC_OVR(); // clear the overrap.
 ```
 
 
 
 ### ADC_read()
 
-It receives voltage depending on the condition.
+Read current data.
 
 ```c++
 uint32_t ADC_read(void);
 ```
 
-**Parameters**
-
-* **state**: S0, S1, S2 ...
-* **mode**:  FULL(0) , HALF(1) 
-
 **Example code**
 
 ```c++
-Stepper_pinOut(1, FULL)// FULL MODE, Output the state S1 
+ADC_read(); //current analog data.
 ```
 
 
 
 ### ADC_pinmap()
 
-It receives voltage depending on the condition.
+Match the Channel each port and pin
 
 ```c++
 uint32_t ADC_pinmap(GPIO_TypeDef *port, int pin);
@@ -1638,13 +1613,13 @@ uint32_t ADC_pinmap(GPIO_TypeDef *port, int pin);
 
 **Parameters**
 
-* **state**: S0, S1, S2 ...
-* **mode**:  FULL(0) , HALF(1) 
+* **GPIO_TypeDef *port**: GPIOA~GPIOH
+* **pin**: pin number 0~15 
 
 **Example code**
 
 ```c++
-Stepper_pinOut(1, FULL)// FULL MODE, Output the state S1 
+ADC_pinmap(GPIOB, 0); // it match channel of port and pin
 ```
 
 
