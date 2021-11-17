@@ -812,7 +812,9 @@ tick.read_ms(); // Read the current time
 #ifdef __cplusplus
  extern "C" {
 #endif /* __cplusplus */
-	 
+
+/* Timer Configuration */
+     
 typedef struct {
 	GPIO_TypeDef *port;
 	int pin;
@@ -829,6 +831,37 @@ void TIM_INT_enable(TIM_TypeDef* timx);
 void TIM_INT_disable(TIM_TypeDef* timx);
 uint32_t is_UIF(TIM_TypeDef *TIMx);
 void clear_UIF(TIM_TypeDef *TIMx);
+
+/* Input Capture*/
+
+// Edge Type
+#define RISE 0
+#define FALL 1
+#define BOTH 2
+
+//Input Capture
+
+typedef struct{
+	GPIO_TypeDef *port;
+	int pin;   
+	TIM_TypeDef *timer;
+	int ch;  		 //int Timer Channel
+	int ICnum; 		 //int IC number
+} IC_t;
+
+
+
+void ICAP_init(IC_t *ICx, GPIO_TypeDef *port, int pin);
+void ICAP_setup(IC_t *ICx, int IC_number, int edge_type);
+void ICAP_counter_us(IC_t *ICx, int usec);
+
+void ICAP_pinmap(IC_t *timer_pin);
+
+uint32_t is_pending_TIM(TIM_TypeDef *TIMx);
+void clear_pending_TIM(TIM_TypeDef *TIMx);
+
+uint32_t is_CCIF(TIM_TypeDef *TIMx, uint32_t ccNum);
+void clear_CCIF(TIM_TypeDef *TIMx, uint32_t ccNum);
 
 
 #ifdef __cplusplus
@@ -1001,6 +1034,152 @@ void clear_UIF(TIM_TypeDef *TIMx);
 ```c++
 clear_UIF(TIM2) // clear Timer 2 UI Flag 
 ```
+
+
+
+### ICAP_init()
+
+Initialize Input capture mode, and select input port and pin
+
+```c++
+void ICAP_init(IC_t *ICx, GPIO_TypeDef *port, int pin);
+```
+
+**Parameters**
+
+* **IC_t *ICx**:  go to structure ex) &echo ,&trig
+* **GPIO_TypeDef *port**: GPIOA~GPIOH
+* **pin**: PIN 0~15
+
+**Example code**
+
+```c++
+ICAP_init(&echo,GPIOB,10); //Input Capture for echo, Input capture init PB10   	
+```
+
+
+
+### ICAP_setup()
+
+Select input capture channel and edge detech
+
+```c++
+void ICAP_setup(IC_t *ICx, int IC_number, int edge_type);
+```
+
+**Parameters**
+
+* **IC_t *ICx**:  go to structure ex) &echo ,&trig
+* **IC_number**: IC channel number ex) Timer2 channel 3, 4
+* **edge_type**: RISE(0), FALL(1), BOTH(2) // edge detech
+
+**Example code**
+
+```c++
+clear_UIF(TIM2) // clear Timer 2 UI Flag 
+```
+
+
+
+### ICAP_counter_us()
+
+Clear UIFlage
+
+```c++
+void ICAP_counter_us(IC_t *ICx, int usec);
+```
+
+**Parameters**
+
+* **TIM_TypeDef *timerx**:  TIM1~TIM11
+
+**Example code**
+
+```c++
+clear_UIF(TIM2) // clear Timer 2 UI Flag 
+```
+
+
+
+### is_pending_TIM()
+
+Clear UIFlage
+
+```c++
+uint32_t is_pending_TIM(TIM_TypeDef *TIMx);
+```
+
+**Parameters**
+
+* **TIM_TypeDef *timerx**:  TIM1~TIM11
+
+**Example code**
+
+```c++
+clear_UIF(TIM2) // clear Timer 2 UI Flag 
+```
+
+
+
+### clear_pending_TIM()
+
+Clear UIFlage
+
+```c++
+void clear_pending_TIM(TIM_TypeDef *TIMx);
+```
+
+**Parameters**
+
+* **TIM_TypeDef *timerx**:  TIM1~TIM11
+
+**Example code**
+
+```c++
+clear_UIF(TIM2) // clear Timer 2 UI Flag 
+```
+
+
+
+### is_CCIF()
+
+Clear UIFlage
+
+```c++
+uint32_t is_CCIF(TIM_TypeDef *TIMx, uint32_t ccNum);
+```
+
+**Parameters**
+
+* **TIM_TypeDef *timerx**:  TIM1~TIM11
+
+**Example code**
+
+```c++
+clear_UIF(TIM2) // clear Timer 2 UI Flag 
+```
+
+
+
+### clear_CCIF()
+
+Clear UIFlage
+
+```c++
+void clear_CCIF(TIM_TypeDef *TIMx, uint32_t ccNum);
+```
+
+**Parameters**
+
+* **TIM_TypeDef *timerx**:  TIM1~TIM11
+
+**Example code**
+
+```c++
+clear_UIF(TIM2) // clear Timer 2 UI Flag 
+```
+
+
 
 
 
