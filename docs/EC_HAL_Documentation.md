@@ -1076,14 +1076,14 @@ void ICAP_setup(IC_t *ICx, int IC_number, int edge_type);
 **Example code**
 
 ```c++
-clear_UIF(TIM2) // clear Timer 2 UI Flag 
+ICAP_setup(&echo, 3, RISE); //when rising edge channel 3 does input capture  
 ```
 
 
 
 ### ICAP_counter_us()
 
-Clear UIFlage
+Select input capture timer's  counter period
 
 ```c++
 void ICAP_counter_us(IC_t *ICx, int usec);
@@ -1091,19 +1091,20 @@ void ICAP_counter_us(IC_t *ICx, int usec);
 
 **Parameters**
 
-* **TIM_TypeDef *timerx**:  TIM1~TIM11
+* **IC_t *ICx**:  go to structure ex) &echo ,&trig
+* **usec**: timer period (Unit: usec)
 
 **Example code**
 
 ```c++
-clear_UIF(TIM2) // clear Timer 2 UI Flag 
+ICAP_counter_us(&echo, 10); //counter period is 10usec
 ```
 
 
 
 ### is_pending_TIM()
 
-Clear UIFlage
+Check UI Flag : ON , OFF
 
 ```c++
 uint32_t is_pending_TIM(TIM_TypeDef *TIMx);
@@ -1116,14 +1117,14 @@ uint32_t is_pending_TIM(TIM_TypeDef *TIMx);
 **Example code**
 
 ```c++
-clear_UIF(TIM2) // clear Timer 2 UI Flag 
+is_pending_TIM(TIM2) // check Timer 2 UI Flag 
 ```
 
 
 
 ### clear_pending_TIM()
 
-Clear UIFlage
+Clear UI Flage
 
 ```c++
 void clear_pending_TIM(TIM_TypeDef *TIMx);
@@ -1136,14 +1137,14 @@ void clear_pending_TIM(TIM_TypeDef *TIMx);
 **Example code**
 
 ```c++
-clear_UIF(TIM2) // clear Timer 2 UI Flag 
+clear_pending_TIM(TIM2) // clear Timer 2 UI Flag 
 ```
 
 
 
 ### is_CCIF()
 
-Clear UIFlage
+Check capture compare interrupt Flage ON, OFF
 
 ```c++
 uint32_t is_CCIF(TIM_TypeDef *TIMx, uint32_t ccNum);
@@ -1152,18 +1153,19 @@ uint32_t is_CCIF(TIM_TypeDef *TIMx, uint32_t ccNum);
 **Parameters**
 
 * **TIM_TypeDef *timerx**:  TIM1~TIM11
+* **ccNum**: timer's channel number 1~4
 
 **Example code**
 
 ```c++
-clear_UIF(TIM2) // clear Timer 2 UI Flag 
+is_CCIF(TIM2, 3); //if it becomes capture compare, TIMx_SR bit gets 1
 ```
 
 
 
 ### clear_CCIF()
 
-Clear UIFlage
+Clear Capture Compare interrupt Flage
 
 ```c++
 void clear_CCIF(TIM_TypeDef *TIMx, uint32_t ccNum);
@@ -1172,11 +1174,12 @@ void clear_CCIF(TIM_TypeDef *TIMx, uint32_t ccNum);
 **Parameters**
 
 * **TIM_TypeDef *timerx**:  TIM1~TIM11
+* **ccNum**: timer's channel ex) 1~4
 
 **Example code**
 
 ```c++
-clear_UIF(TIM2) // clear Timer 2 UI Flag 
+clear_CCIF(TIM2, 3); //Clear capture compare flag of channel 3 of TIM2 
 ```
 
 
