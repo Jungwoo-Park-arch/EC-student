@@ -1806,6 +1806,191 @@ ADC_pinmap(GPIOB, 0); // it match channel of port and pin
 
 
 
+### UART
+
+ `#include "ecUART.h"`
+
+
+```c++
+#ifndef __EC_UART_H
+#define __EC_UART_H
+
+#include "stm32f411xe.h"
+#include <stdio.h>
+
+/************************************************/
+//  USART1  TX : PA9 , PB6    RX : PA10 , PB3
+// 	USART2  TX : PA2  				RX : PA3
+// 	USART6	TX : PA11, PC6  	RX : PA12, PC7
+//*******************************************/
+
+void UART2_init();
+void USART_write(USART_TypeDef * USARTx, uint8_t *buffer, uint32_t nBytes);
+void USART_delay(uint32_t us);
+void USART_init(USART_TypeDef* USARTx, uint32_t baud);
+void USART_begin(USART_TypeDef* USARTx, GPIO_TypeDef* GPIO_TX, int pinTX,GPIO_TypeDef* GPIO_RX, int pinRX, int baud);
+uint8_t USART_getc(USART_TypeDef *USARTx);
+uint32_t is_USART_RXNE(USART_TypeDef * USARTx);
+
+
+#endif
+```
+
+
+
+### UART2_init()
+
+Initialize only UART2. when we communicate with Tera-Term, this function is necessary.
+
+```c++
+void UART2_init();
+```
+
+**Example code**
+
+```c++
+UART2_init(); // Start UART2
+```
+
+
+
+### USART_write()
+
+this function for writing in tera-term.
+
+```c++
+void USART_write(USART_TypeDef * USARTx, uint8_t *buffer, uint32_t nBytes);
+```
+
+**Parameters**
+
+* **USART_TypeDef * USARTx**: USART1, USART2 ...
+* **buffer**: saved data
+* **nBytes**: the number of Character
+
+**Example code**
+
+```c++
+USART_write(USART1, &muc2Data, 1); //write down the muc2Data's value in tera-term
+```
+
+
+
+### USART_delay()
+
+We need waiting time so Use this function. This function works similar to delay_ms()
+
+```c++
+void USART_delay(uint32_t us);
+```
+
+**Parameters**
+
+* **us**: delay time (Unit: usec)
+
+**Example code**
+
+```c++
+USART_delay(300); delay 300 usec
+```
+
+
+
+### USART_init()
+
+in this funcition, Specify the pin according to Uart's number.
+
+```c++
+void USART_init(USART_TypeDef* USARTx, uint32_t baud);
+```
+
+**Parameters**
+
+* **USART_TypeDef* USARTx**: USART1, USART2 ...
+* **baud**: communication rate //9600 .. 
+
+**Example code**
+
+```c++
+  USART_init(USART2, 38400); //ON USART2 and baud-rate 38400
+```
+
+
+
+### USART_begin()
+
+Turn on the USART communication. this function usually use in the USART_init()
+
+```c++
+void USART_begin(USART_TypeDef* USARTx, GPIO_TypeDef* GPIO_TX, int pinTX,int GPIO_TypeDef* GPIO_RX, int pinRX, int baud);
+```
+
+**Parameters**
+
+* **USART_TypeDef* USARTx**: USART1, USART2 ...
+
+* **GPIO_TypeDef* GPIO_TX**: GPIOA~GPIOH 
+
+* **pinTX**: 0~15
+
+* **pinTX,GPIO_TypeDef* GPIO_RX**: GPIOA~GPIOH
+
+* **pinRX**: 0~15
+
+  *Check the UASRAT Pin map
+
+**Example code**
+
+```c++
+  USART_begin(USART1, GPIOA,9,GPIOA,10, 9600); //USART1 baud: 9600 
+```
+
+
+
+### USART_getc()
+
+Match the Channel each port and pin
+
+```c++
+uint8_t USART_getc(USART_TypeDef *USARTx);
+```
+
+**Parameters**
+
+* **GPIO_TypeDef *port**: GPIOA~GPIOH
+* **pin**: pin number 0~15 
+
+**Example code**
+
+```c++
+ADC_pinmap(GPIOB, 0); // it match channel of port and pin
+```
+
+
+
+### is_USART_RXNE()
+
+Match the Channel each port and pin
+
+```c++
+uint32_t is_USART_RXNE(USART_TypeDef * USARTx);
+```
+
+**Parameters**
+
+* **GPIO_TypeDef *port**: GPIOA~GPIOH
+* **pin**: pin number 0~15 
+
+**Example code**
+
+```c++
+ADC_pinmap(GPIOB, 0); // it match channel of port and pin
+```
+
+
+
+
+
 Class or Header name
 
 ### Function Name
