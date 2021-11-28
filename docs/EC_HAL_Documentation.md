@@ -1938,6 +1938,8 @@ void USART_begin(USART_TypeDef* USARTx, GPIO_TypeDef* GPIO_TX, int pinTX,int GPI
 * **pinRX**: 0~15
 
   *Check the UASRAT Pin map
+  
+  ![image](https://user-images.githubusercontent.com/84221531/143729060-f5b9680a-3e6d-4790-8499-b547cd364926.png)
 
 **Example code**
 
@@ -1985,7 +1987,7 @@ uint32_t is_USART_RXNE(USART_TypeDef * USARTx);
 is_USART_RXNE(USART1); 
 ```
 
-
+![image](https://user-images.githubusercontent.com/84221531/143729012-2bba2191-e665-4c2b-9f68-d8144016719c.png)
 
 
 
