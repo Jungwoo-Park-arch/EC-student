@@ -1938,8 +1938,6 @@ void USART_begin(USART_TypeDef* USARTx, GPIO_TypeDef* GPIO_TX, int pinTX,int GPI
 * **pinRX**: 0~15
 
   *Check the UASRAT Pin map
-  ![image](https://user-images.githubusercontent.com/84221531/143728786-80a61d3b-d123-4572-b03a-b8e0ffb36495.png)
-
 
 **Example code**
 
@@ -1951,7 +1949,7 @@ void USART_begin(USART_TypeDef* USARTx, GPIO_TypeDef* GPIO_TX, int pinTX,int GPI
 
 ### USART_getc()
 
-Match the Channel each port and pin
+Get the Character value by user
 
 ```c++
 uint8_t USART_getc(USART_TypeDef *USARTx);
@@ -1959,20 +1957,19 @@ uint8_t USART_getc(USART_TypeDef *USARTx);
 
 **Parameters**
 
-* **GPIO_TypeDef *port**: GPIOA~GPIOH
-* **pin**: pin number 0~15 
+* **USART_TypeDef* USARTx**: USART1, USART2 ...
 
 **Example code**
 
 ```c++
-ADC_pinmap(GPIOB, 0); // it match channel of port and pin
+USART_getc(USART1); //get Usart1's value
 ```
 
 
 
 ### is_USART_RXNE()
 
-Match the Channel each port and pin
+Make sure you are ready to read the value.
 
 ```c++
 uint32_t is_USART_RXNE(USART_TypeDef * USARTx);
@@ -1980,13 +1977,12 @@ uint32_t is_USART_RXNE(USART_TypeDef * USARTx);
 
 **Parameters**
 
-* **GPIO_TypeDef *port**: GPIOA~GPIOH
-* **pin**: pin number 0~15 
+* **USART_TypeDef* USARTx**: USART1, USART2 ...
 
 **Example code**
 
-```c++
-ADC_pinmap(GPIOB, 0); // it match channel of port and pin
+```
+is_USART_RXNE(USART1); 
 ```
 
 
