@@ -1938,6 +1938,8 @@ void USART_begin(USART_TypeDef* USARTx, GPIO_TypeDef* GPIO_TX, int pinTX,int GPI
 * **pinRX**: 0~15
 
   *Check the UASRAT Pin map
+  ![image](https://user-images.githubusercontent.com/84221531/143728786-80a61d3b-d123-4572-b03a-b8e0ffb36495.png)
+
 
 **Example code**
 
