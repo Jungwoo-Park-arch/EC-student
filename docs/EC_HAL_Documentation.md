@@ -1980,6 +1980,8 @@ uint32_t is_USART_RXNE(USART_TypeDef * USARTx);
 **Parameters**
 
 * **USART_TypeDef* USARTx**: USART1, USART2 ...
+![image](https://user-images.githubusercontent.com/84221531/143729012-2bba2191-e665-4c2b-9f68-d8144016719c.png)
+
 
 **Example code**
 
