@@ -1804,9 +1804,7 @@ uint32_t ADC_pinmap(GPIO_TypeDef *port, int pin);
 ADC_pinmap(GPIOB, 0); // it match channel of port and pin
 ```
 
-
-
-### UART
+## UART
 
  `#include "ecUART.h"`
 
