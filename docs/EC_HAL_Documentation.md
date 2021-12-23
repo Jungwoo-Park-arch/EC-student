@@ -1572,26 +1572,33 @@ Stepper_pinOut(1, FULL)// FULL MODE, Output the state S1
 #define SINGLE 1
 
 // Edge Type
-#define RISE 1
-#define FALL 2
-#define BOTH 3
+#define RISE_ADC 1
+#define FALL_ADC 2
+#define BOTH_ADC 3
 
 #define _DEFAULT 0
 
 // ADC setting
 void ADC_init(GPIO_TypeDef *port, int pin, int trigmode);			// trigmode : SW , TRGO
-void ADC_continue(int contmode); 													// contmode : CONT, SINGLE / Operate both ADC,JADC
+void ADC_continue(int contmode); 					// contmode : CONT, SINGLE / Operate both ADC,JADC
 void ADC_TRGO(TIM_TypeDef* TIMx, uint32_t msec, int edge);
 void ADC_sequence(int length, int *seq); 
+void ADC_start(void);
+
 void TIM_TRGO_init(TIM_TypeDef* timx, uint32_t msec);
 
-void ADC_start(void);
+void ADC_inject_init(GPIO_TypeDef *port, int pin, int trigmode);
+void ADC_inject_TRGO(TIM_TypeDef* TIMx, uint32_t msec, int edge);
+void ADC_inject_sequence(uint16_t length, uint16_t *seq);
+void ADC_inject_start(void);
+
 
 uint32_t is_ADC_EOC(void);
 uint32_t is_ADC_OVR(void);
 void clear_ADC_OVR(void);
 
 uint32_t ADC_read(void);
+uint32_t ADC_read_JDR(uint32_t num);
 uint32_t ADC_pinmap(GPIO_TypeDef *port, int pin);
 #endif
 
@@ -1682,6 +1689,20 @@ void ADC_sequence(int length, int *seq);
 ADC_sequence(2,seq); //Total channel's number is 2. The priority is to have a low index number.
 ```
 
+### ADC_start()
+
+ADC regular mode enbale
+
+```c++
+void ADC_start(void);
+```
+
+**Example code**
+
+```c++
+ADC_start(); // ADC start
+```
+
 
 
 ### TIM_TRGO_init()
@@ -1705,18 +1726,95 @@ TIM_TRGO_init(TIM2,1) // TRGO timer clock ON. TIM2 1msec
 
 
 
-### ADC_start()
+### ADC_inject_init()
 
-ADC is started 
+Initialize GPIO port and pin, and select trig mode (injected mode)
 
 ```c++
-void ADC_start(void);
+void ADC_inject_init(GPIO_TypeDef *port, int pin, int trigmode);
+```
+
+**Parameters**
+
+* **GPIO_TypeDef *port**: GPIOA~GPIOH
+* **pin**: 0~15
+* **trigmode**: SW(0) // internal , TRGO(1) //external   
+
+**Example code**
+
+```c++
+ADC_injection_init(GPIOA, 1, TRGO); //injected ADC init 
+```
+
+### ADC_inject_TRGO()
+
+Setting TRGO mode (injected mode)
+
+```c++
+void ADC_inject_TRGO(TIM_TypeDef* TIMx, uint32_t msec, int edge);
+```
+
+**Parameters**
+
+* **TIM_TypeDef* TIMx**: TIMER number: ex) TIM2, TIM4 //injected ADC TRGO only(timer 1,2,4,5) 
+* **msec**:  timer period
+* **edge**: RISE(0), FALL(1), BOTH(2) //edge detech
+
+**Example code**
+
+```c++
+ADC_inject_TRGO(TIM2,1,RISE);	// HW trig mode settting, TIM2(1msec), injected mode
+```
+
+### ADC_inject_sequence()
+
+Set the Channel's length and channel
+
+```c++
+void ADC_inject_sequence(uint16_t length, uint16_t *seq);
+```
+
+**Parameters**
+
+* **length**: The number of channels ex) if use ch1, ch2 ..... length = 2
+* ***seq**:  ex) seq[2] = {8 , 9} 
+
+**Example code**
+
+```c++
+ADC_inject_sequence(2, seq);
+```
+
+### ADC_inject_start()
+
+ADC injected mode enable
+
+```c++
+void ADC_inject_start(void);
 ```
 
 **Example code**
 
 ```c++
-ADC_start(); //ADC start 
+ADC_inject_start(); //ADC injected mode start
+```
+
+### ADC_read_JDR()
+
+read the JDR value
+
+```c++
+uint32_t ADC_read_JDR(uint32_t num);
+```
+
+**Parameters**
+
+* **num**: 1, 2, 3, 4 //ADC injected have only 4 data register
+
+**Example code**
+
+```c++
+ADC_read_JDR(1); //read the JDR1 value
 ```
 
 
